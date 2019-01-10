@@ -1,4 +1,9 @@
 # Processing of Personverser from the UUB archive
+## Notice!!
+The current state of this project is far from complete and the general intention is to have a base which to use for further experimentation.
+Thus the code quality and functionality may vary quite a bit.
+
+There's no usage documentation so BEWARE that you are on your own.
 
 ## Prerequisites
 * ruby
