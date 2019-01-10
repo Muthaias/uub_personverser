@@ -1,7 +1,7 @@
-function loop_images(from, to)
+function loop_images(from, to, inpath_template, outpath_template)
   for i = from:to
-    fpath = sprintf("../../verser/%d.jpg", i);
-    tpath = sprintf("../../fix_verser/%d.png", i);
+    fpath = sprintf(inpath_template, i);
+    tpath = sprintf(outpath_template, i);
     printf("%s\n", fpath);
     fix_image(fpath, tpath);
   endfor
