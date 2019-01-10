@@ -1,3 +1,9 @@
+if (ARGV.include?("--h") || ARGV.include?("-help"))
+	puts "Image downloader for personverser @ UUB"
+	puts " Usage: ruby download.rb [count|109853] [offset|1] [output_root_dir|./verser]"
+	exit(0)
+end
+
 def download_entries(offset, count, outpath_gen, address_gen)
 	stop = offset + count - 1
 	(offset..stop).each do |num|
