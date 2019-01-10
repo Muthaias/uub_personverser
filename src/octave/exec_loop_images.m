@@ -16,10 +16,10 @@ end
 inpath_root = "./verser";
 outpath_root = "./fix_verser";
 if (length(arg_list) > 2)
-	inpath_root = arg_list{3}
+	inpath_root = arg_list{3};
 end
 if (length(arg_list) > 3)
-	outpath_root = arg_list{4}
+	outpath_root = arg_list{4};
 end
 
 inpath_template = strcat(inpath_root, "/%d.jpg");
