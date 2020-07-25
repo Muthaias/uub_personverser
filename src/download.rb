@@ -1,4 +1,5 @@
 require 'fileutils'
+require_relative 'file-downloader'
 
 if (ARGV.include?("--h") || ARGV.include?("-help"))
 	puts "Image downloader for personverser @ UUB"
@@ -6,22 +7,19 @@ if (ARGV.include?("--h") || ARGV.include?("-help"))
 	exit(0)
 end
 
-def download_entries(offset, count, outpath_gen, address_gen)
-	stop = offset + count - 1
-	(offset..stop).each do |num|
-		outpath = outpath_gen.call(num)
-		address = address_gen.call(num)
-		puts address
-		data = `curl "#{address}" --output #{outpath}`
-	end
-end
-
 offset = ARGV.length > 1 ? ARGV[1].to_i(10) : 1
 count = ARGV.length > 0 ? ARGV[0].to_i(10) : 108953
 outpath_root = ARGV.length > 2 ? ARGV[2] : "./verser"
 
-outpath_gen = lambda {|num| "#{outpath_root}/#{num}.jpg"}
-address_gen = lambda {|num| "https://deva.its.uu.se/upps-personverser/PictureLoader?Antialias=ON&ImageId=#{num}&Scale=1"}
+downloader = FileDownloader.from_array_ids(
+	(1..108953),
+	lambda {|num| "https://hosting.softagent.se/upps-personverser/PictureLoader?Antialias=ON&ImageId=#{num}&Scale=1"},
+	lambda {|num| "#{outpath_root}/#{num}.jpg"}
+)
 
 FileUtils.mkdir_p(outpath_root)
-download_entries(offset, count, outpath_gen, address_gen)
+fileIds = downloader.list_files
+fileIds.each do |fileId|
+	file = downloader.file(fileId)
+	FileDownloader.download_entry(file)
+end
