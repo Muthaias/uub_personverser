@@ -1,4 +1,4 @@
-verser/*
-fix_verser/*
-fix_texter/*
+verser
+*.pyc
 *.swp
+tessdata
