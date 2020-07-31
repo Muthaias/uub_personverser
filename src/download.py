@@ -41,3 +41,8 @@ class FileDownloader:
     def from_array_ids(ids: [str], gen_url, gen_path):
         files = [CachableFile(id, gen_url(id), gen_path(id)) for id in ids]
         return FileDownloader(files)
+
+    @staticmethod
+    def from_array(urls: [str], gen_path):
+        files = [CachableFile(id, url, gen_path(url)) for url in urls]
+        return FileDownloader(files)
