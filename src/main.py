@@ -4,20 +4,48 @@ import time
 
 from download import FileDownloader
 from processing import TesseractProcessor, OctaveProcessor
-from argument_parser import ArgumentParser
+from argument_parser import ArgumentParser, ArgumentGroup, MutexArgumentParser, StaticArgument
 
 args = ArgumentParser.parse_argv(
     [
-        ArgumentParser("offset", "-o", 1, 1, lambda params: int(params[0])),
-        ArgumentParser("count", "-c", 1, 108953, lambda params: int(params[0])),
         ArgumentParser("cache_dir", "-cd", 1, "./verser", lambda params: params[0]),
         ArgumentParser("result_dir", "-rd", 1, "./verser", lambda params: params[0]),
-        ArgumentParser("processor_id", "-p", 1, "ocr", lambda params: params[0])
+        ArgumentParser("processor_id", "-p", 1, "ocr", lambda params: params[0]),
+        MutexArgumentParser(
+            "files",
+            [
+                ArgumentParser(
+                    "files",
+                    "-fseq",
+                    3,
+                    None,
+                    lambda params: {
+                        "type": "sequence",
+                        "format": params[0],
+                        "offset": int(params[1]),
+                        "count": int(params[2])
+                    }
+                ),
+                ArgumentGroup(
+                    "files",
+                    [
+                        StaticArgument("type", "sequence"),
+                        ArgumentParser("offset", "-o", 1, 1, lambda params: int(params[0])),
+                        ArgumentParser("format", "-furl", 1, "https://hosting.softagent.se/upps-personverser/PictureLoader?Antialias=ON&ImageId=%s&Scale=1", lambda params: params[0]),
+                        ArgumentParser("count", "-c", 1, 108953, lambda params: int(params[0])),
+                    ]
+                )
+            ]
+        )
     ],
     sys.argv[1:len(sys.argv)]
 )
 
-url_format = "https://hosting.softagent.se/upps-personverser/PictureLoader?Antialias=ON&ImageId=%s&Scale=1"
+files = args["files"]
+url_format = files["format"]
+offset = files["offset"]
+count = files["count"]
+
 cache_dir = args["cache_dir"]
 result_dir = args["result_dir"]
 processor_id = args["processor_id"]
@@ -37,7 +65,7 @@ all_processors = [
     )
 ]
 downloader = FileDownloader.from_array_ids(
-    range(args["offset"], args["offset"] + args["count"]),
+    range(offset, offset + count),
     lambda id: url_format % id,
     lambda id: path_format % id
 )
