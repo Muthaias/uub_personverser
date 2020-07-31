@@ -6,20 +6,27 @@ Thus the code quality and functionality may vary quite a bit.
 There's no usage documentation so BEWARE that you are on your own.
 
 ## Prerequisites
-* ruby
-* curl
+* python
 * octave / matlab - with image processing toolbox
 * tesseract ocr - with language packs
 
 ## Setup
-### Debian
+### Fedora 32
+```
+sudo dnf update -y
+sudo dnf install python -y
+sudo dnf groupinstall "Development Tools" "Development Libraries" -y
+sudo dnf install octave octave-devel -y
 
-Run `sudo apt-get install ruby curl octave liboctave-dev tesseract-ocr tesseract-ocr-swe tesseract-ocr-eng` to install the needed packages in debian.
+sudo dnf install dnf-plugins-core -y
+sudo dnf config-manager --add-repo https://download.opensuse.org/repositories/home:Alexander_Pozdnyakov/Fedora_30/home:Alexander_Pozdnyakov.repo
+sudo dnf install tesseract -y
+sudo dnf install tesseract-langpack-swe tesseract-langpack-eng -y
 
-Run `octave-cli` to enter the octave command line interface.
+sudo octave-cli --eval "pkg install -forge general image"
 
-In octave-cli run `pkg -forge list` to list all the packages available in octave forge.
-
-In octave-cli run `pkg install -forge general image` to download and install the required packages.
-
-In octave-cl run `exit` to exit.
+python -m pip install --upgrade pip setuptools wheel && \
+python -m pip install --compile --install-option="--with-openssl" pycurl && \
+python -m pip install pillow && \
+python -m pip install pytesseract
+```
