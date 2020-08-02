@@ -1,0 +1,1 @@
+podman build --tag fedora:uub_personverser -f Dockerfile

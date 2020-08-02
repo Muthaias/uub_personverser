@@ -9,6 +9,7 @@ There's no usage documentation so BEWARE that you are on your own.
 * python
 * octave / matlab - with image processing toolbox
 * tesseract ocr - with language packs
+* (podman / docker)
 
 ## Setup
 ### Fedora 32
@@ -30,3 +31,6 @@ python -m pip install --compile --install-option="--with-openssl" pycurl && \
 python -m pip install pillow && \
 python -m pip install pytesseract
 ```
+
+### Simple setup
+In order to simplify the setup you might want to use Podman or Docker. There's a Dockerfile based on Fedora 32 which handles the setup of dependencies. The file `build-container.sh` will build the container using Podman and the file `run-container.sh` will run the container and mount the development directory i.e. the directory containing the `run-container.sh` file.

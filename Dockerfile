@@ -17,8 +17,6 @@ RUN python -m pip install --upgrade pip setuptools wheel && \
     python -m pip install pillow && \
     python -m pip install pytesseract
 
-COPY ./src/ /opt/
-
 VOLUME [ "/data" ]
 WORKDIR /data
 ENTRYPOINT [ "bash" ]
