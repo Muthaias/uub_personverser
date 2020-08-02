@@ -1,5 +1,7 @@
 # Processing of Personverser from the UUB archive
-## Notice!!
+## Disclaimer
+This is not the best code in the world. This is just a tribute. As such the project should be considered an eternal work in progress with a lot of flaws.
+
 The current state of this project is far from complete and the general intention is to have a base which to use for further experimentation.
 Thus the code quality and functionality may vary quite a bit.
 
@@ -32,5 +34,5 @@ python -m pip install pillow && \
 python -m pip install pytesseract
 ```
 
-### Simple setup
+### Simple setup (Podman / Docker)
 In order to simplify the setup you might want to use Podman or Docker. There's a Dockerfile based on Fedora 32 which handles the setup of dependencies. The file `build-container.sh` will build the container using Podman and the file `run-container.sh` will run the container and mount the development directory i.e. the directory containing the `run-container.sh` file.
